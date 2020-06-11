@@ -1,424 +1,428 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-#define maxsize 15
-#define maxnum 1000
- 
-typedef struct {
-	char Student_ID[maxsize];
-	char Name[maxsize];
-	char Class_Number[maxsize];
-	char Attandance_date[maxsize];
-	char Attandance_Result[maxsize];
-} student;
- 
-student Students[maxnum];
- 
-int num = 0;
-char buf[maxsize];
-/*ÊµÏÖÃ¿´ÎÊäÈë½áÊø×îºóÊäÈë»Ø³µÍË³öµÄ¹¦ÄÜ£¬¸üºÃµÄÊµÏÖÓëÓÃ»§µÄ½»»¥ */
-void wait_for_Enter() {
-	getchar();
-	getchar();
+#defineÂ maxsizeÂ 15
+#defineÂ maxnumÂ 1000
+Â 
+typedefÂ structÂ {
+charÂ Student_ID[maxsize];
+charÂ Name[maxsize];
+charÂ Class_Number[maxsize];
+charÂ Attandance_date[maxsize];
+charÂ Attandance_Result[maxsize];
+}Â student; /*å­¦ç”Ÿä¿¡æ¯ç»“æ„*/
+
+Â 
+studentÂ Students[maxnum];
+Â 
+intÂ numÂ =Â 0;
+charÂ buf[maxsize];
+/*å®ç°æ¯æ¬¡è¾“å…¥ç»“æŸ,æœ€åè¾“å…¥å›è½¦é€€å‡ºçš„åŠŸèƒ½*/
+voidÂ wait_for_Enter()Â {
+getchar();
+getchar();
 }
-/*ÎªÁËÊµÏÖ¶ÔÈÕÆÚ½øĞĞÅÅĞò£¬ÎÒµÄÏë·¨ÊÇ¶ÔÓÚÔÂ·İ£¬Ö±½ÓÓÃatoi½ØÈ¡³öÀ´×ª»¯³ÉÔÂ·İ£¬¶ÔÓÚÌìÊı£¬ÔòĞèÒªÓÃÒÔÏÂº¯Êı¼ÆËã*/
-int convert(char str[]) {
-	int i,res = 0, cnt = 0;
-	for (i = strlen(str) - 3; i >= 0; i--) {
-		if (str[i] >= '0'&&str[i] <= '9') res *= 10, res += (str[i] - '0');
-		else break;
-	}
-	return res;//·µ»ØÌìÊı£¬Ò²¾ÍÊÇÒ»ÔÂÖĞµÄµÚ¼¸Ìì£¬ÀıÈç11ÔÂ5ÈÕ£¬·µ»ØµÄ¾ÍÊÇ5;5ÔÂ23ÈÕ£¬·µ»ØµÄ¾ÍÊÇ23
+/*å¯¹æ—¥æœŸè¿›è¡Œæ’åºï¼Œå¯¹äºæœˆä»½ï¼Œç›´æ¥ç”¨atoiæˆªå–å‡ºæ¥è½¬åŒ–æˆæœˆä»½ï¼Œå¯¹äºå¤©æ•°ï¼Œç”¨ä»¥ä¸‹å‡½æ•°è®¡ç®—*/
+intÂ convert(charÂ str[])Â {
+intÂ i,resÂ =Â 0,Â cntÂ =Â 0;
+forÂ (iÂ =Â strlen(str)Â -Â 3;Â iÂ >=Â 0;Â i--)Â {
+ifÂ (str[i]Â >=Â &apos;0&apos;&&str[i]Â <=Â &apos;9&apos;)Â resÂ *=Â 10,Â resÂ +=Â (str[i]Â -Â &apos;0&apos;);
+elseÂ break;
 }
-/*¸Ãº¯ÊıÊµÏÖµÄÊÇ°ÑstudentÀàĞÍ±äÁ¿bµÄËùÓĞĞÅÏ¢¸³¸østudentÀàĞÍµÄ±äÁ¿a*/
-void copy(student *a,student *b) {
-	strcpy_s(a->Student_ID ,20,b->Student_ID);
-	strcpy_s(a->Name ,20,b->Name);
-	strcpy_s(a->Class_Number ,20,b->Class_Number);
-	strcpy_s(a->Attandance_Result ,20, b->Attandance_Result);
-	strcpy_s(a->Attandance_date ,20,b->Attandance_date);
+returnÂ res;/*è¿”å›å¤©æ•°ï¼Œä¹Ÿå°±æ˜¯ä¸€æœˆä¸­çš„ç¬¬å‡ å¤©*/}
+/*è¯¥å‡½æ•°å®ç°çš„æ˜¯æŠŠstudentç±»å‹å˜é‡bçš„æ‰€æœ‰ä¿¡æ¯èµ‹ç»™studentç±»å‹çš„å˜é‡a*/
+voidÂ copy(studentÂ *a,studentÂ *b)Â {
+strcpy_s(a->Student_IDÂ ,20,b->Student_ID);
+strcpy_s(a->NameÂ ,20,b->Name);
+strcpy_s(a->Class_NumberÂ ,20,b->Class_Number);
+strcpy_s(a->Attandance_ResultÂ ,20,Â b->Attandance_Result);
+strcpy_s(a->Attandance_dateÂ ,20,b->Attandance_date);
 }
-/*´Ëº¯ÊıµÄ×÷ÓÃÊÇÊµÏÖ¶ÔÒÑ´æÔÚµÄÑ§Éú²»¿ÉÔÙ´ÎÌí¼ÓµÄ×÷ÓÃ*/
-int judge(char *ID) {
-	int i;
-	for (i = 0; i < num; i++) {
-		if (strcmp(Students[i].Student_ID, ID) == 0) return 0;
-	}
-	return 1;
+/*å¯¹å·²å­˜åœ¨çš„å­¦ç”Ÿä¸å¯å†æ¬¡æ·»åŠ */
+intÂ judge(charÂ *ID)Â {
+intÂ i;
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(Students[i].Student_ID,Â ID)Â ==Â 0)Â returnÂ 0;
 }
-/*ÊäÈëº¯Êı£¬ÎªÁË¼ò»¯´úÂë*/
-void setInfo(char pinfo[], char desinfo[]) {
-	printf("%s£º", pinfo);
-	scanf("%s", desinfo);
+returnÂ 1;
 }
-/*Êä³öÃ¿¸öÑ§ÉúµÄÏêÏ¸ĞÅÏ¢*/
-void PrintAllInformation() {
-	int i;
-	printf("------------------------------------\n");
-	for (i = 0; i < num; i++)
-		printf("%s %s %s %s %s\n", Students[i].Student_ID, Students[i].Name, Students[i].Class_Number, Students[i].Attandance_date, Students[i].Attandance_Result);
-	printf("------------------------------------\n");
-	printf("´òÓ¡³É¹¦£¡°´»Ø³µ¼ü·µ»Ø\n");
-	wait_for_Enter();
+/*è¾“å…¥å‡½æ•°ï¼Œä¸ºäº†ç®€åŒ–ä»£ç */
+voidÂ setInfo(charÂ pinfo[],Â charÂ desinfo[])Â {
+printf("%sï¼š",Â pinfo);
+scanf("%s",Â desinfo);
 }
-/*Êä³öÃ¿¸öÑ§ÉúµÄ²¿·ÖĞÅÏ¢*/
-void PrintPartInformation() {
-	int i;
-	printf("------------------------------------\n");
-	for (i = 0; i < num; i++)
-		printf("%s %s %s\n", Students[i].Name, Students[i].Attandance_date, Students[i].Attandance_Result);
-	printf("------------------------------------\n");
-	printf("´òÓ¡³É¹¦£¡°´»Ø³µ¼ü·µ»Ø\n");
-	wait_for_Enter();
+/*è¾“å‡ºæ¯ä¸ªå­¦ç”Ÿçš„è¯¦ç»†ä¿¡æ¯*/
+voidÂ PrintAllInformation()Â {
+intÂ i;
+printf("------------------------------------\n");
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)
+printf("%sÂ %sÂ %sÂ %sÂ %s\n",Â Students[i].Student_ID,Â Students[i].Name,Â Students[i].Class_Number,Â Students[i].Attandance_date,Â Students[i].Attandance_Result);
+printf("------------------------------------\n");
+printf("æ‰“å°æˆåŠŸï¼æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
 }
-/*¸Ãº¯ÊıÊµÏÖµÄÊÇÏòÏµÍ³ÖĞÌí¼ÓÍ¬Ñ§*/
-void ADD() {
-	char ID[maxsize];
-	printf("ÇëÊäÈëÑ§ÉúµÄÑ§ºÅ£º");
-	scanf("%s", ID);
-	if (!judge(ID)) {
-		printf("´ËÈËÒÑ¾­´æÔÚ\n");
-		printf("Ìí¼ÓÍê³É£¡Çë°´»Ø³µ¼ü·µ»Ø\n");
-		wait_for_Enter();
-		return;
-	}
-	strcpy(Students[num].Student_ID, ID);
-	setInfo("ÇëÊäÈëÑ§ÉúµÄĞÕÃû", Students[num].Name);
-	setInfo("ÇëÊäÈëÑ§ÉúµÄ°à¼¶", Students[num].Class_Number);
-	setInfo("ÇëÊäÈëÑ§ÉúµÄ¿¼ÇÚÈÕÆÚ", Students[num].Attandance_date);
-	setInfo("ÇëÊäÈëÑ§ÉúµÄ¿¼ÇÚ½á¹û³ö ÇÚ ¡Ì   ¿õ ¿Î X   ÊÂ ¼Ù ¡÷   ²¡ ¼Ù ¡ğ   ³Ù µ½ +   Ôç ÍË ¨C", Students[num].Attandance_Result);
-	num++;//Í¬Ñ§ÈËÊı¼ÓÒ»
-	printf("Ìí¼Ó³É¹¦£¡°´»Ø³µ¼ü·µ»Ø\n");
-	wait_for_Enter();
+/*è¾“å‡ºæ¯ä¸ªå­¦ç”Ÿçš„éƒ¨åˆ†ä¿¡æ¯*/
+voidÂ PrintPartInformation()Â {
+intÂ i;
+printf("------------------------------------\n");
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)
+printf("%sÂ %sÂ %s\n",Â Students[i].Name,Â Students[i].Attandance_date,Â Students[i].Attandance_Result);
+printf("------------------------------------\n");
+printf("æ‰“å°æˆåŠŸï¼æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
 }
-/*¸Ãº¯ÊıÊµÏÖµÄÊÇ²éÕÒµÄ¹¦ÄÜ£¬¿ÉÒÔ°´Ñ§ºÅ£¬ĞÕÃû£¬¿¼ÇÚÈÕÆÚ½øĞĞ²éÕÒ*/
-void Find() {
-	int i, op, flag = -1;
-	char information[maxsize];
-	printf("<1>°´Ñ§ºÅ²éÕÒ  <2>°´ĞÕÃû²éÕÒ  <3>°´¿¼ÇÚÈÕÆÚ²éÕÒ\n");
-	scanf("%d", &op);
-	if (op == 1) {
-		printf("ÇëÊäÈë¸ÃÉúÑ§ºÅ£º");
-		scanf("%s", information);
-		for (i = 0; i < num; i++) {
-			if (strcmp(information, Students[i].Student_ID) == 0) printf("%s %s %s %s %s\n\n", Students[i].Student_ID, Students[i].Name, Students[i].Class_Number, Students[i].Attandance_date, Students[i].Attandance_Result), flag = 1;
- 
-		}
-	} else if (op == 2) {
-		printf("ÇëÊäÈë¸ÃÉúĞÕÃû£º");
-		scanf("%s", information);
-		for (i = 0; i < num; i++) {
-			if (strcmp(information, Students[i].Name) == 0) printf("%s %s %s %s %s\n\n", Students[i].Student_ID, Students[i].Name, Students[i].Class_Number, Students[i].Attandance_date, Students[i].Attandance_Result), flag = 1;
-		}
-	} else {
-		printf("ÇëÊäÈë¿¼ÇÚÈÕÆÚ£º");
-		scanf("%s", information);
-		for (i = 0; i < num; i++) {
-			if (strcmp(information, Students[i].Attandance_date) == 0) 	printf("%s %s %s %s %s\n\n", Students[i].Student_ID, Students[i].Name, Students[i].Class_Number, Students[i].Attandance_date, Students[i].Attandance_Result), flag = 1;;
-		}
-	}
-	if (flag == -1) printf("²»´æÔÚ´ËĞÅÏ¢£¡\n");
-	printf("²éÕÒÍê³É£¡°´»Ø³µ¼ü·µ»Ø\n");
-	wait_for_Enter();
+/*å¢åŠ å‡½æ•°ï¼Œå‘ç³»ç»Ÿä¸­æ·»åŠ åŒå­¦*/
+voidÂ ADD()Â {
+charÂ ID[maxsize];
+printf("è¯·è¾“å…¥å­¦ç”Ÿçš„å­¦å·ï¼š");
+scanf("%s",Â ID);
+ifÂ (!judge(ID))Â {
+printf("æ­¤äººå·²ç»å­˜åœ¨\n");
+printf("æ·»åŠ å®Œæˆï¼è¯·æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
+return;
 }
-/*¸Ãº¯ÊıÊµÏÖµÄÊÇ¶ÔÏµÍ³ÖĞÒÑ¾­´æÔÚµÄĞÅÏ¢½øĞĞĞŞ¸Ä£¬ÀàËÆÉÏÃæµÄ²éÕÒ£¬Ò²¿ÉÒÔ¸ù¾İ²»Í¬µÄĞÅÏ¢Ñ¡ÔñÏëÒªĞŞ¸ÄµÄĞÅÏ¢½øĞĞĞŞ¸Ä*/
-void Change() {
-	int i, j = -1;
-	char op[2], information[maxsize], find[maxsize];
-	printf("<1>°´Ñ§ºÅĞŞ¸Ä  <2>°´ĞÕÃûĞŞ¸Ä  <3>°´¿¼ÇÚÈÕÆÚĞŞ¸Ä\n");
-	scanf("%s", op);
-	if (op[0] == '1') setInfo("ÇëÊäÈë¸ÃÉúÑ§ºÅ", information);
-	else if (op[0] == '2') setInfo("ÇëÊäÈë¸ÃÉúĞÕÃû", information);
-	else setInfo("ÇëÊäÈë¿¼ºËÈÕÆÚ", information);
-	strcpy(find, information);
-	if(op[0]=='1')
-		for (i = 0; i < num; i++) {
-			if (strcmp(find, Students[i].Student_ID) == 0) j = i;
-		}
-	else if(op[0]=='2')
-		for (i = 0; i < num; i++) {
-			if (strcmp(find, Students[i].Name) == 0) j = i;
-		}
-	else
-		for (i = 0; i < num; i++) {
-			if (strcmp(find, Students[i].Attandance_date) == 0) j = i;
-		}
-	if (j == -1) {
-		printf("²»´æÔÚÒªÕÒµÄĞÅÏ¢£¡\n");
-		printf("ĞŞ¸ÄÍê³É£¡°´»Ø³µ¼ü·µ»Ø\n");
-		wait_for_Enter();
-		return;
-	}
-	setInfo("<1>ĞŞ¸ÄÑ§ºÅ  <2>ĞŞ¸ÄĞÕÃû  <3>ĞŞ¸Ä¿¼ÇÚÈÕÆÚ", op);
-	if (op[0] == '1') {
-		setInfo("ÇëÊäÈëĞŞ¸ÄºóµÄĞÂÑ§ºÅ", information);
-		strcpy(Students[j].Student_ID, information);
-	} else if (op[0] == '2') {
-		setInfo("ÇëÊäÈëĞŞ¸ÄºóµÄĞÂĞÕÃû", information);
-		strcpy(Students[j].Name, information);
-	} else {
-		setInfo("ÇëÊäÈëĞŞ¸ÄºóµÄĞÂ¿¼ºËÈÕÆÚ", information);
-		strcpy(Students[j].Attandance_date, information);
-	}
-	printf("ĞŞ¸ÄÍê³É£¡°´»Ø³µ¼ü·µ»Ø£¡\n");
-	wait_for_Enter();
+strcpy(Students[num].Student_ID,Â ID);
+setInfo("è¯·è¾“å…¥å­¦ç”Ÿçš„å§“å",Â Students[num].Name);
+setInfo("è¯·è¾“å…¥å­¦ç”Ÿçš„ç­çº§",Â Students[num].Class_Number);
+setInfo("è¯·è¾“å…¥å­¦ç”Ÿçš„è€ƒå‹¤æ—¥æœŸ",Â Students[num].Attandance_date);
+setInfo("è¯·è¾“å…¥å­¦ç”Ÿçš„è€ƒå‹¤ç»“æœå‡ºÂ å‹¤Â âˆšÂ Â Â æ—·Â è¯¾Â XÂ Â Â äº‹Â å‡Â â–³Â Â Â ç—…Â å‡Â â—‹Â Â Â è¿ŸÂ åˆ°Â +Â Â Â æ—©Â é€€Â â€“",Â Students[num].Attandance_Result);
+num++;/*åŒå­¦äººæ•°+1*/
+printf("æ·»åŠ æˆåŠŸï¼æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
 }
-/*¸Ãº¯ÊıÊµÏÖµÄÊÇ¶ÔÒÑ¾­´æÔÚÓÚÏµÍ³ÖÖµÄÍ¬Ñ§µÄĞÅÏ¢½øĞĞÉ¾³ı²Ù×÷£¬¾ßÌåÏë·¨ÊÇÑ§ÉúÈËÊınum--£¬ºóÃæËùÓĞÈËµÄĞÅÏ¢Ç°ÒÆÒ»¸öÎ»ÖÃ£¬ÊµÏÖĞÅÏ¢µÄ¸²¸Ç*/
-void Delete() {
-	int i, j,flag = -1;
-	char op[2],information[maxsize];
-	setInfo("ÇëÊäÈë£º<1>°´Ñ§ºÅÉ¾³ı<2>°´ĞÕÃûÉ¾³ı", op);
-	if (op[0] == '1') {
-		setInfo("ÇëÊäÈëÑ§ºÅ", information);
-		for (i = 0; i < num; i++) {
-			if (strcmp(Students[i].Student_ID, information) == 0) {
-				flag = 1;
-				for (j = i + 1; j < num; j++) {
-					copy(&Students[i], &Students[j]);
- 
-				}
-			}
-		}
-	} else {
-		setInfo("ÇëÊäÈëĞÕÃû", information);
-		for (i = 0; i < num; i++) {
-			if (strcmp(Students[i].Name, information) == 0) {
-				flag = 1;
-				for (j = i + 1; j < num; j++) {
-					copy(&Students[i], &Students[j]);
- 
-				}
-			}
-		}
-	}
-	if (flag == -1) {
-		printf("²»´æÔÚ´ËĞÅÏ¢£¡\n");
-		printf("É¾³ıÍê³É£¡°´»Ø³µ¼ü·µ»Ø\n");
-		wait_for_Enter();
-		return ;
-	}
-	num--;
-	printf("²»´æÔÚ´ËĞÅÏ¢£¡\n");
-	printf("É¾³ıÍê³É£¡°´»Ø³µ¼ü·µ»Ø\n");
-	wait_for_Enter();
+/*æŸ¥æ‰¾å‡½æ•°ï¼Œå¯ä»¥æŒ‰å­¦å·ï¼Œå§“åï¼Œè€ƒå‹¤æ—¥æœŸè¿›è¡ŒæŸ¥æ‰¾*/
+voidÂ Find()Â {
+intÂ i,Â op,Â flagÂ =Â -1;
+charÂ information[maxsize];
+printf("<1>æŒ‰å­¦å·æŸ¥æ‰¾Â Â <2>æŒ‰å§“åæŸ¥æ‰¾Â Â <3>æŒ‰è€ƒå‹¤æ—¥æœŸæŸ¥æ‰¾\n");
+scanf("%d",Â &op);
+ifÂ (opÂ ==Â 1)Â {
+printf("è¯·è¾“å…¥è¯¥ç”Ÿå­¦å·ï¼š");
+scanf("%s",Â information);
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(information,Â Students[i].Student_ID)Â ==Â 0)Â printf("%sÂ %sÂ %sÂ %sÂ %s\n\n",Â Students[i].Student_ID,Â Students[i].Name,Â Students[i].Class_Number,Â Students[i].Attandance_date,Â Students[i].Attandance_Result),Â flagÂ =Â 1;
+Â 
 }
-/*´Ëº¯ÊıÊµÏÖµÄÊÇ¹¦ÄÜ5 ¶ÔÏµÍ³ÖĞÒÑ¾­´æÔÚµÄĞÅÏ¢½øĞĞÊä³ö*/
-void Print() {
-	int op;
-	printf("ÇëÑ¡Ôñ\n<1>²¿·Ö´òÓ¡£¨Êä³öÑ§ÉúĞÕÃûºÍ¿¼ÇÚÈÕÆÚºÍ¿¼ÇÚÇé¿ö£©\n<2>È«²¿´òÓ¡£¨Êä³öËùÓĞÑ§ÉúµÄËùÓĞĞÅÏ¢£©£º");
-	scanf("%d", &op);
-	if (op == 1) PrintPartInformation();
-	else PrintAllInformation();
- 
+}Â elseÂ ifÂ (opÂ ==Â 2)Â {
+printf("è¯·è¾“å…¥è¯¥ç”Ÿå§“åï¼š");
+scanf("%s",Â information);
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(information,Â Students[i].Name)Â ==Â 0)Â printf("%sÂ %sÂ %sÂ %sÂ %s\n\n",Â Students[i].Student_ID,Â Students[i].Name,Â Students[i].Class_Number,Â Students[i].Attandance_date,Â Students[i].Attandance_Result),Â flagÂ =Â 1;
 }
-/*½»»»Á½¸ö±äÁ¿µÄËùÓĞ³ÉÔ±µÄÊıÖµ£¬ÒòÎª³ÉÔ±¶¼ÊÇcharÊı×é£¬ËùÒÔÓÃµ½ÁËstrcmpº¯Êı¡£´Ëº¯ÊıÖ÷ÒªÊÇÎªÅÅĞò½øĞĞ·şÎñ£¬²ÉÓÃÖ¸Õë½øĞĞ½»»»*/
-void exchange(student *a, student *b) {
-	char tmp[maxsize];
-	strcpy(tmp, a->Student_ID);
-	strcpy(a->Student_ID, b->Student_ID);
-	strcpy(b->Student_ID, tmp);
- 
-	strcpy(tmp, a->Name);
-	strcpy(a->Name, b->Name);
-	strcpy(b->Name, tmp);
- 
-	strcpy(tmp, a->Class_Number);
-	strcpy(a->Class_Number, b->Class_Number);
-	strcpy(b->Class_Number, tmp);
- 
-	strcpy(tmp, a->Attandance_Result);
-	strcpy(a->Attandance_Result, b->Attandance_Result);
-	strcpy(b->Attandance_Result, tmp);
- 
-	strcpy(tmp, a->Attandance_date);
-	strcpy(a->Attandance_date, b->Attandance_date);
-	strcpy(b->Attandance_date, tmp);
-	return;
+}Â elseÂ {
+printf("è¯·è¾“å…¥è€ƒå‹¤æ—¥æœŸï¼š");
+scanf("%s",Â information);
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(information,Â Students[i].Attandance_date)Â ==Â 0)Â  printf("%sÂ %sÂ %sÂ %sÂ %s\n\n",Â Students[i].Student_ID,Â Students[i].Name,Â Students[i].Class_Number,Â Students[i].Attandance_date,Â Students[i].Attandance_Result),Â flagÂ =Â 1;;
 }
-/*ÊµÏÖ¹¦ÄÜ6ÅÅĞò£¬¿ÉÒÔ°´Ñ§ºÅ£¬ĞÕÃû£¬¿¼ÇÚÈÕÆÚ½øĞĞÅÅĞò£¬Ê¹ÓÃµÄÊÇÃ°ÅİÅÅĞò¶ÔËùÒªÇóµÄĞÅÏ¢½øĞĞÅÅĞò*/
-void Order() {
-	int op, i, j;
-	char tmp[maxsize];
-	printf("ÇëÊäÈë£º<1>°´Ñ§ºÅ´ÓĞ¡µ½´óÅÅĞò <2>°´Ñ§ÉúĞÕÃûASCLLÂëÅÅĞò <3>°´¿¼ÇÚÈÕÆÚ´ÓĞ¡µ½´óÅÅĞò£º\n");
-	scanf("%d", &op);
-	if (op == 1) {
-		for (i = 0; i < num; i++) {
-			for (j = i+1; j < num; j++) {
-				if (strcmp(Students[i].Student_ID, Students[j].Student_ID) > 0) {
-					exchange(&Students[i], &Students[j]);
-				}
-			}
-		}
-	} else if (op == 2) {
-		for (i = 0; i < num; i++) {
-			for (j = i+1; j < num; j++) {
-				if (strcmp(Students[i].Name, Students[j].Name) > 0) {
-					exchange(&Students[i], &Students[j]);
-				}
-			}
-		}
-	} else {
-		int month_1, month_2, day_1, day_2;
-		for (i = 0; i < num; i++) {
-			month_1 = atoi(Students[i].Attandance_date);
-			day_1 = convert(Students[i].Attandance_date);
-			for (j = i+1; j < num; j++) {
-				month_2 = atoi(Students[j].Attandance_date);
-				day_2 = convert(Students[j].Attandance_date);
-				if(month_1>month_2) exchange(&Students[i], &Students[j]);
-				else if(month_1==month_2&&day_1>day_2) exchange(&Students[i], &Students[j]);
-			}
- 
-		}
-	}
-	printf("ÅÅĞò³É¹¦£¡°´»Ø³µ¼ü·µ»Ø\n");
-	wait_for_Enter();
 }
-/*Êä³ö¿¼ÇÚÃ÷Ï¸±í£¬¿¼ÇÚÃ÷Ï¸±í¾ßÌåÖµµÃÊÇÉ¶ÑùµÄ±í£¬ÊÇ°´ÎÒ¸öÈËµÄÀí½â£¬Èç¹ûÎÒÀí½âÓĞÎÊÌâ£¬¿ÉÒÔÔÙ½ĞÎÒ¸Ä*/ 
-void Detail_Print() {
-	int i, j;
-	char tmp[maxsize];
-	int month_1, month_2, day_1, day_2;
-	for (i = 0; i < num; i++) {
-		month_1 = atoi(Students[i].Attandance_date);
-		day_1 = convert(Students[i].Attandance_date);
-		for (j = 0; j < num; j++) {
-			month_2 = atoi(Students[j].Attandance_date);
-			day_2 = convert(Students[j].Attandance_date);
-			if (month_1 < month_2) exchange(&Students[i], &Students[j]);
-			else if (month_1 == month_2 && day_1 < day_2) exchange(&Students[i], &Students[j]);
-		}
-	}
-	printf("------------------------------------\n");
-	printf("¿¼ÇÚÃ÷Ï¸±í£º\n");
-	printf("%s£º\n", Students[0].Attandance_date);
-	printf("%s %s %s %s\n", Students[0].Student_ID, Students[0].Name, Students[0].Class_Number, Students[0].Attandance_Result);
-	strcmp(tmp, Students[0].Attandance_date);
-	for (i = 1; i < num; i++) {
-		if (strcmp(Students[i].Attandance_date, tmp) != 0) {
-			printf("%s£º\n", Students[i].Attandance_date);
-			strcmp(tmp, Students[i].Attandance_date);
-		}
-		printf("%s %s %s %s\n", Students[i].Student_ID, Students[i].Name, Students[i].Class_Number, Students[i].Attandance_Result);
-	}
-	printf("------------------------------------\n");
-	printf("´òÓ¡³É¹¦£¡°´»Ø³µ¼ü·µ»Ø\n");
-	wait_for_Enter();
+ifÂ (flagÂ ==Â -1)Â printf("ä¸å­˜åœ¨æ­¤ä¿¡æ¯ï¼\n");
+printf("æŸ¥æ‰¾å®Œæˆï¼æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
 }
-/*¿¼ÇÚÈÕ±¨±í*/ 
-void Daily_Print() {
-	int i;
-	char information[maxsize];
-	setInfo("ÇëÊäÈëÒª²é¿´µÄÈÕÆÚ", information);
-	printf("------------------------------------\n");
-	printf("%sµÄ¿¼ÇÚÇé¿ö£º\n", information);
-	for (i = 0; i < num; i++) {
-		if (strcmp(information, Students[i].Attandance_date) == 0) printf("%s %s %s %s\n", Students[i].Student_ID, Students[i].Name, Students[i].Class_Number, Students[i].Attandance_Result);
-	}
-	printf("------------------------------------\n");
-	printf("´òÓ¡³É¹¦£¡°´»Ø³µ¼ü·µ»Ø\n");
-	wait_for_Enter();
+
+/*ä¿®æ”¹å‡½æ•°ï¼Œå¯ä»¥æ ¹æ®ä¸åŒçš„ä¿¡æ¯é€‰æ‹©æƒ³è¦ä¿®æ”¹çš„ä¿¡æ¯è¿›è¡Œä¿®æ”¹*/
+voidÂ Change()Â {
+intÂ i,Â jÂ =Â -1;
+charÂ op[2],Â information[maxsize],Â find[maxsize];
+printf("<1>æŒ‰å­¦å·ä¿®æ”¹Â Â <2>æŒ‰å§“åä¿®æ”¹Â Â <3>æŒ‰è€ƒå‹¤æ—¥æœŸä¿®æ”¹\n");
+scanf("%s",Â op);
+ifÂ (op[0]Â ==Â &apos;1&apos;)Â setInfo("è¯·è¾“å…¥è¯¥ç”Ÿå­¦å·",Â information);
+elseÂ ifÂ (op[0]Â ==Â &apos;2&apos;)Â setInfo("è¯·è¾“å…¥è¯¥ç”Ÿå§“å",Â information);
+elseÂ setInfo("è¯·è¾“å…¥è€ƒæ ¸æ—¥æœŸ",Â information);
+strcpy(find,Â information);
+if(op[0]==&apos;1&apos;)
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(find,Â Students[i].Student_ID)Â ==Â 0)Â jÂ =Â i;
 }
-/*¿¼ÇÚÒì³£±í£¬Êä³öËùÓĞ²»ÊÇ ¡®¶Ô¹´ ¡¯µÄÈËµÄĞÅÏ¢*/ 
-void Informal_Print() {
-	int i, cnt = 0;
-	printf("------------------------------------\n");
-	printf("¿¼ÇÚÒì³£±í£º\n");
-	for (i = 0; i < num; i++) {
-		if (strcmp(Students[i].Attandance_Result, "¡Ì") != 0)
-			printf("%s %s %s %s %s\n", Students[i].Student_ID, Students[i].Name, Students[i].Class_Number, Students[i].Attandance_date, Students[i].Attandance_Result), cnt++;
-	}
-	printf("¿¼ÇÚÒì³£ÈËÊı£º%dÈË\n", cnt);
-	printf("------------------------------------\n");
-	printf("´òÓ¡³É¹¦£¡°´»Ø³µ¼ü·µ»Ø\n");
-	wait_for_Enter();
+elseÂ if(op[0]==&apos;2&apos;)
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(find,Â Students[i].Name)Â ==Â 0)Â jÂ =Â i;
 }
-/*Çë¼ÙÒì³£±í£¬Êä³öËùÓĞÇë¼ÙµÄÈËµÄĞÅÏ¢*/ 
-void AskForLeave_Print() {
-	int i, cnt = 0;
-	printf("------------------------------------\n");
-	printf("Çë¼ÙÒì³£±í\n");
-	for (i = 0; i < num; i++) {
-		if (strcmp(Students[i].Attandance_Result, "¡ğ") == 0 || strcmp(Students[i].Attandance_Result, "¡ğ") == 0)
-			printf("%s %s %s %s %s\n", Students[i].Student_ID, Students[i].Name, Students[i].Class_Number, Students[i].Attandance_date, Students[i].Attandance_Result), cnt++;
-	}
-	printf("Çë¼ÙÈËÊı£º%dÈË\n", cnt);
-	printf("------------------------------------\n");
-	printf("´òÓ¡³É¹¦£¡°´»Ø³µ¼ü·µ»Ø\n");
-	wait_for_Enter();
+else
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(find,Â Students[i].Attandance_date)Â ==Â 0)Â jÂ =Â i;
 }
-/*ÊÂÏî¹¦ÄÜ7½øĞĞÊı¾İÍ³¼Æ*/ 
-void Statistics() {
-	char op[2];
-	setInfo("ÇëÑ¡Ôñ\n<1>¿¼ÇÚÃ÷Ï¸±í\n<2>¿¼ÇÚÈÕ±¨±í\n<3>¿¼ÇÚÒì³£±í\n<4>Çë¼Ù»ã×Ü±í",op);
-	if (op[0] == '1') {
-		Detail_Print();
-	} else if (op[0] == '2') {
-		Daily_Print();
-	} else if (op[0] == '3') {
-		Informal_Print();
-	} else {
-		AskForLeave_Print();
-	}
+ifÂ (jÂ ==Â -1)Â {
+printf("ä¸å­˜åœ¨è¦æ‰¾çš„ä¿¡æ¯ï¼\n");
+printf("ä¿®æ”¹å®Œæˆï¼æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
+return;
 }
- 
-int main() {
-	int i, a, b = 1;
-	FILE *F=fopen("Manage.txt","wt");//×¢ÒâÕâÀïÊÇwt  Ö»Ğ´´ò¿ª»ò½¨Á¢Ò»¸öÎÄ±¾ÎÄ¼ş£¬Ö»ÔÊĞíĞ´Êı¾İ
-	FILE *fp= fopen("Manage.txt", "at+");
-	if (!fp) {
-		printf("´íÎó£¡Î´ÄÜ´ò¿ªÎÄ¼ş\n");
-		exit(0);
-	}
-	fscanf(fp, "%d", &num);//¶ÁÈëÒÑ¾­ÔÚÏµÍ³ÖĞµÄÑ§ÉúµÄ¸öÊı 
-	printf("µ±Ç°ÏµÍ³ÖĞ´¢´æµÄÑ§Éú¸öÊı£º%dÈË\n", num);
-	for (i = 0; i < num; i++) {//¶ÁÈëÏµÍ³ÖĞÑ§ÉúµÄĞÅÏ¢ 
-		fscanf(fp, "%s%s%s%s%s", &Students[i].Student_ID, &Students[i].Name, &Students[i].Class_Number, &Students[i].Attandance_date, &Students[i].Attandance_Result);
-	}
-	fclose(fp);
-	while (b != 0) {
-		printf("==============================================================================\n\n");
-		printf("                          ´óÑ§Éú¿¼ÇÚÏµÍ³\n\n");
-		printf("==============================================================================\n\n");
-		printf("<1> ĞÂÔöÑ§ÉúÊı¾İ        <2> ²éÕÒÑ§ÉúÊı¾İ             <3>ĞŞ¸ÄÑ§Éú¼ÇÂ¼     \n");
-		printf("<4>É¾³ıÑ§Éú¼ÇÂ¼         <5> ÏÔÊ¾Ñ§Éú¿¼ÇÚµÄÊı¾İÁĞ±í   <6> ¶ÔÖ¸¶¨Êı¾İ½øĞĞÅÅĞò \n");
-		printf("<7>½øĞĞÊı¾İÍ³¼Æ         <8>  quit\n\n");
-		scanf("%d", &a);
-		switch (a) {
-			case 1:
-				ADD();
-				break;
-			case 2:
-				Find();
-				break;
-			case 3:
-				Change();
-				break;
-			case 4:
-				Delete();
-				break;
-			case 5:
-				Print();
-				break;
-			case 6:
-				Order();
-				break;
-			case 7:
-				Statistics();
-				break;
-			case 8:
-				printf("ÒÑÍË³ö\n");
-				b = 0;
-				break;
-		}
-		system("cls");//ÇåÆÁº¯Êı£¬ÎªÁËÊ¹½çÃæ¸ü¼ÓÃÀ¹Û 
-	}
-	//ÔÚ×îºó°ÑĞÅÏ¢ÊäÈëµ½ÎÄ¼ş£¬±£ÁôÒÔ±¸ÏÂ´ÎÔËĞĞÊ¹ÓÃ  
-	fprintf(F,"%d\n",num);
-	for (i = 0; i<num; i++) {
-		fprintf(F, "%s %s %s %s %s\n", Students[i].Student_ID, Students[i].Name, Students[i].Class_Number, Students[i].Attandance_date, Students[i].Attandance_Result);
-	}
-	fclose(F);
-	//ÎÄ¼ş²Ù×÷½áÊø 
-	return 0;
+setInfo("<1>ä¿®æ”¹å­¦å·Â Â <2>ä¿®æ”¹å§“åÂ Â <3>ä¿®æ”¹è€ƒå‹¤æ—¥æœŸ",Â op);
+ifÂ (op[0]Â ==Â &apos;1&apos;)Â {
+setInfo("è¯·è¾“å…¥ä¿®æ”¹åçš„æ–°å­¦å·",Â information);
+strcpy(Students[j].Student_ID,Â information);
+}Â elseÂ ifÂ (op[0]Â ==Â &apos;2&apos;)Â {
+setInfo("è¯·è¾“å…¥ä¿®æ”¹åçš„æ–°å§“å",Â information);
+strcpy(Students[j].Name,Â information);
+}Â elseÂ {
+setInfo("è¯·è¾“å…¥ä¿®æ”¹åçš„æ–°è€ƒæ ¸æ—¥æœŸ",Â information);
+strcpy(Students[j].Attandance_date,Â information);
+}
+printf("ä¿®æ”¹å®Œæˆï¼æŒ‰å›è½¦é”®è¿”å›ï¼\n");
+wait_for_Enter();
+}
+
+/*åˆ é™¤å‡½æ•°ï¼Œå­¦ç”Ÿäººæ•°num--ï¼Œåé¢æ‰€æœ‰äººçš„ä¿¡æ¯å‰ç§»ä¸€ä¸ªä½ç½®ï¼Œå®ç°ä¿¡æ¯çš„è¦†ç›–*/
+voidÂ Delete()Â {
+intÂ i,Â j,flagÂ =Â -1;
+charÂ op[2],information[maxsize];
+setInfo("è¯·è¾“å…¥ï¼š<1>æŒ‰å­¦å·åˆ é™¤<2>æŒ‰å§“ååˆ é™¤",Â op);
+ifÂ (op[0]Â ==Â &apos;1&apos;)Â {
+setInfo("è¯·è¾“å…¥å­¦å·",Â information);
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(Students[i].Student_ID,Â information)Â ==Â 0)Â {
+flagÂ =Â 1;
+forÂ (jÂ =Â iÂ +Â 1;Â jÂ <Â num;Â j++)Â {
+copy(&Students[i],Â &Students[j]);
+Â 
+}
+}
+}
+}Â elseÂ {
+setInfo("è¯·è¾“å…¥å§“å",Â information);
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(Students[i].Name,Â information)Â ==Â 0)Â {
+flagÂ =Â 1;
+forÂ (jÂ =Â iÂ +Â 1;Â jÂ <Â num;Â j++)Â {
+copy(&Students[i],Â &Students[j]);
+Â 
+}
+}
+}
+}
+ifÂ (flagÂ ==Â -1)Â {
+printf("ä¸å­˜åœ¨æ­¤ä¿¡æ¯ï¼\n");
+printf("åˆ é™¤å®Œæˆï¼æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
+returnÂ ;
+}
+num--;
+printf("ä¸å­˜åœ¨æ­¤ä¿¡æ¯ï¼\n");
+printf("åˆ é™¤å®Œæˆï¼æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
+}
+/*è¾“å‡ºå‡½æ•° */
+voidÂ Print()Â {
+intÂ op;
+printf("è¯·é€‰æ‹©\n<1>éƒ¨åˆ†æ‰“å°ï¼ˆè¾“å‡ºå­¦ç”Ÿå§“åå’Œè€ƒå‹¤æ—¥æœŸå’Œè€ƒå‹¤æƒ…å†µï¼‰\n<2>å…¨éƒ¨æ‰“å°ï¼ˆè¾“å‡ºæ‰€æœ‰å­¦ç”Ÿçš„æ‰€æœ‰ä¿¡æ¯ï¼‰ï¼š");
+scanf("%d",Â &op);
+ifÂ (opÂ ==Â 1)Â PrintPartInformation();
+elseÂ PrintAllInformation();
+Â 
+}
+
+/*äº¤æ¢ä¸¤ä¸ªå˜é‡çš„æ‰€æœ‰æˆå‘˜çš„æ•°å€¼ï¼Œå› ä¸ºæˆå‘˜éƒ½æ˜¯charæ•°ç»„ï¼Œæ‰€ä»¥ç”¨åˆ°äº†strcmpå‡½æ•°ã€‚æ­¤å‡½æ•°ä¸»è¦æ˜¯ä¸ºæ’åºè¿›è¡ŒæœåŠ¡ï¼Œé‡‡ç”¨æŒ‡é’ˆè¿›è¡Œäº¤æ¢*/
+voidÂ exchange(studentÂ *a,Â studentÂ *b)Â {
+charÂ tmp[maxsize];
+strcpy(tmp,Â a->Student_ID);
+strcpy(a->Student_ID,Â b->Student_ID);
+strcpy(b->Student_ID,Â tmp);
+Â 
+strcpy(tmp,Â a->Name);
+strcpy(a->Name,Â b->Name);
+strcpy(b->Name,Â tmp);
+Â 
+strcpy(tmp,Â a->Class_Number);
+strcpy(a->Class_Number,Â b->Class_Number);
+strcpy(b->Class_Number,Â tmp);
+Â 
+strcpy(tmp,Â a->Attandance_Result);
+strcpy(a->Attandance_Result,Â b->Attandance_Result);
+strcpy(b->Attandance_Result,Â tmp);
+Â 
+strcpy(tmp,Â a->Attandance_date);
+strcpy(a->Attandance_date,Â b->Attandance_date);
+strcpy(b->Attandance_date,Â tmp);
+return;
+}
+/*æ’åºå‡½æ•°ï¼ŒæŒ‰å­¦å·ï¼Œå§“åï¼Œè€ƒå‹¤æ—¥æœŸè¿›è¡Œæ’åºï¼Œä½¿ç”¨çš„æ˜¯å†’æ³¡æ’åºå¯¹æ‰€è¦æ±‚çš„ä¿¡æ¯è¿›è¡Œæ’åº*/
+voidÂ Order()Â {
+intÂ op,Â i,Â j;
+charÂ tmp[maxsize];
+printf("è¯·è¾“å…¥ï¼š<1>æŒ‰å­¦å·ä»å°åˆ°å¤§æ’åºÂ <2>æŒ‰å­¦ç”Ÿå§“åASCLLç æ’åºÂ <3>æŒ‰è€ƒå‹¤æ—¥æœŸä»å°åˆ°å¤§æ’åºï¼š\n");
+scanf("%d",Â &op);
+ifÂ (opÂ ==Â 1)Â {
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+forÂ (jÂ =Â i+1;Â jÂ <Â num;Â j++)Â {
+ifÂ (strcmp(Students[i].Student_ID,Â Students[j].Student_ID)Â >Â 0)Â {
+exchange(&Students[i],Â &Students[j]);
+}
+}
+}
+}Â elseÂ ifÂ (opÂ ==Â 2)Â {
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+forÂ (jÂ =Â i+1;Â jÂ <Â num;Â j++)Â {
+ifÂ (strcmp(Students[i].Name,Â Students[j].Name)Â >Â 0)Â {
+exchange(&Students[i],Â &Students[j]);
+}
+}
+}
+}Â elseÂ {
+intÂ month_1,Â month_2,Â day_1,Â day_2;
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+month_1Â =Â atoi(Students[i].Attandance_date);
+day_1Â =Â convert(Students[i].Attandance_date);
+forÂ (jÂ =Â i+1;Â jÂ <Â num;Â j++)Â {
+month_2Â =Â atoi(Students[j].Attandance_date);
+day_2Â =Â convert(Students[j].Attandance_date);
+if(month_1>month_2)Â exchange(&Students[i],Â &Students[j]);
+elseÂ if(month_1==month_2&&day_1>day_2)Â exchange(&Students[i],Â &Students[j]);
+}
+Â 
+}
+}
+printf("æ’åºæˆåŠŸï¼æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
+}
+
+/*è¾“å‡ºè€ƒå‹¤æ˜ç»†è¡¨*/Â 
+voidÂ Detail_Print()Â {
+intÂ i,Â j;
+charÂ tmp[maxsize];
+intÂ month_1,Â month_2,Â day_1,Â day_2;
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+month_1Â =Â atoi(Students[i].Attandance_date);
+day_1Â =Â convert(Students[i].Attandance_date);
+forÂ (jÂ =Â 0;Â jÂ <Â num;Â j++)Â {
+month_2Â =Â atoi(Students[j].Attandance_date);
+day_2Â =Â convert(Students[j].Attandance_date);
+ifÂ (month_1Â <Â month_2)Â exchange(&Students[i],Â &Students[j]);
+elseÂ ifÂ (month_1Â ==Â month_2Â &&Â day_1Â <Â day_2)Â exchange(&Students[i],Â &Students[j]);
+}
+}
+printf("------------------------------------\n");
+printf("è€ƒå‹¤æ˜ç»†è¡¨ï¼š\n");
+printf("%sï¼š\n",Â Students[0].Attandance_date);
+printf("%sÂ %sÂ %sÂ %s\n",Â Students[0].Student_ID,Â Students[0].Name,Â Students[0].Class_Number,Â Students[0].Attandance_Result);
+strcmp(tmp,Â Students[0].Attandance_date);
+forÂ (iÂ =Â 1;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(Students[i].Attandance_date,Â tmp)Â !=Â 0)Â {
+printf("%sï¼š\n",Â Students[i].Attandance_date);
+strcmp(tmp,Â Students[i].Attandance_date);
+}
+printf("%sÂ %sÂ %sÂ %s\n",Â Students[i].Student_ID,Â Students[i].Name,Â Students[i].Class_Number,Â Students[i].Attandance_Result);
+}
+printf("------------------------------------\n");
+printf("æ‰“å°æˆåŠŸï¼æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
+}
+/*è€ƒå‹¤æ—¥æŠ¥è¡¨*/Â 
+voidÂ Daily_Print()Â {
+intÂ i;
+charÂ information[maxsize];
+setInfo("è¯·è¾“å…¥è¦æŸ¥çœ‹çš„æ—¥æœŸ",Â information);
+printf("------------------------------------\n");
+printf("%sçš„è€ƒå‹¤æƒ…å†µï¼š\n",Â information);
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(information,Â Students[i].Attandance_date)Â ==Â 0)Â printf("%sÂ %sÂ %sÂ %s\n",Â Students[i].Student_ID,Â Students[i].Name,Â Students[i].Class_Number,Â Students[i].Attandance_Result);
+}
+printf("------------------------------------\n");
+printf("æ‰“å°æˆåŠŸï¼æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
+}
+/*è€ƒå‹¤å¼‚å¸¸è¡¨ï¼Œè¾“å‡ºæ‰€æœ‰ä¸æ˜¯Â â€˜å¯¹å‹¾Â â€™çš„äººçš„ä¿¡æ¯*/Â 
+voidÂ Informal_Print()Â {
+intÂ i,Â cntÂ =Â 0;
+printf("------------------------------------\n");
+printf("è€ƒå‹¤å¼‚å¸¸è¡¨ï¼š\n");
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(Students[i].Attandance_Result,Â "âˆš")Â !=Â 0)
+printf("%sÂ %sÂ %sÂ %sÂ %s\n",Â Students[i].Student_ID,Â Students[i].Name,Â Students[i].Class_Number,Â Students[i].Attandance_date,Â Students[i].Attandance_Result),Â cnt++;
+}
+printf("è€ƒå‹¤å¼‚å¸¸äººæ•°ï¼š%däºº\n",Â cnt);
+printf("------------------------------------\n");
+printf("æ‰“å°æˆåŠŸï¼æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
+}
+/*è¯·å‡å¼‚å¸¸è¡¨ï¼Œè¾“å‡ºæ‰€æœ‰è¯·å‡çš„äººçš„ä¿¡æ¯*/Â 
+voidÂ AskForLeave_Print()Â {
+intÂ i,Â cntÂ =Â 0;
+printf("------------------------------------\n");
+printf("è¯·å‡å¼‚å¸¸è¡¨\n");
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {
+ifÂ (strcmp(Students[i].Attandance_Result,Â "â—‹")Â ==Â 0Â ||Â strcmp(Students[i].Attandance_Result,Â "â—‹")Â ==Â 0)
+printf("%sÂ %sÂ %sÂ %sÂ %s\n",Â Students[i].Student_ID,Â Students[i].Name,Â Students[i].Class_Number,Â Students[i].Attandance_date,Â Students[i].Attandance_Result),Â cnt++;
+}
+printf("è¯·å‡äººæ•°ï¼š%däºº\n",Â cnt);
+printf("------------------------------------\n");
+printf("æ‰“å°æˆåŠŸï¼æŒ‰å›è½¦é”®è¿”å›\n");
+wait_for_Enter();
+}
+/*äº‹é¡¹åŠŸèƒ½7è¿›è¡Œæ•°æ®ç»Ÿè®¡*/Â 
+voidÂ Statistics()Â {
+charÂ op[2];
+setInfo("è¯·é€‰æ‹©\n<1>è€ƒå‹¤æ˜ç»†è¡¨\n<2>è€ƒå‹¤æ—¥æŠ¥è¡¨\n<3>è€ƒå‹¤å¼‚å¸¸è¡¨\n<4>è¯·å‡æ±‡æ€»è¡¨",op);
+ifÂ (op[0]Â ==Â &apos;1&apos;)Â {
+Detail_Print();
+}Â elseÂ ifÂ (op[0]Â ==Â &apos;2&apos;)Â {
+Daily_Print();
+}Â elseÂ ifÂ (op[0]Â ==Â &apos;3&apos;)Â {
+Informal_Print();
+}Â elseÂ {
+AskForLeave_Print();
+}
+}
+Â 
+intÂ main()Â {
+intÂ i,Â a,Â bÂ =Â 1;
+FILEÂ *F=fopen("Manage.txt","wt");//æ³¨æ„è¿™é‡Œæ˜¯wtÂ Â åªå†™æ‰“å¼€æˆ–å»ºç«‹ä¸€ä¸ªæ–‡æœ¬æ–‡ä»¶ï¼Œåªå…è®¸å†™æ•°æ®
+FILEÂ *fp=Â fopen("Manage.txt",Â "at+");
+ifÂ (!fp)Â {
+printf("é”™è¯¯ï¼æœªèƒ½æ‰“å¼€æ–‡ä»¶\n");
+exit(0);
+}
+fscanf(fp,Â "%d",Â &num);//è¯»å…¥å·²ç»åœ¨ç³»ç»Ÿä¸­çš„å­¦ç”Ÿçš„ä¸ªæ•°Â 
+printf("å½“å‰ç³»ç»Ÿä¸­å‚¨å­˜çš„å­¦ç”Ÿä¸ªæ•°ï¼š%däºº\n",Â num);
+forÂ (iÂ =Â 0;Â iÂ <Â num;Â i++)Â {//è¯»å…¥ç³»ç»Ÿä¸­å­¦ç”Ÿçš„ä¿¡æ¯Â 
+fscanf(fp,Â "%s%s%s%s%s",Â &Students[i].Student_ID,Â &Students[i].Name,Â &Students[i].Class_Number,Â &Students[i].Attandance_date,Â &Students[i].Attandance_Result);
+}
+fclose(fp);
+whileÂ (bÂ !=Â 0)Â {
+printf("==============================================================================\n\n");
+printf("Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â å¤§å­¦ç”Ÿè€ƒå‹¤ç³»ç»Ÿ\n\n");
+printf("==============================================================================\n\n");
+printf("<1>Â æ–°å¢å­¦ç”Ÿæ•°æ®Â Â Â Â Â Â Â Â <2>Â æŸ¥æ‰¾å­¦ç”Ÿæ•°æ®Â Â Â Â Â Â Â Â Â Â Â Â Â <3>ä¿®æ”¹å­¦ç”Ÿè®°å½•Â Â Â Â Â \n");
+printf("<4>åˆ é™¤å­¦ç”Ÿè®°å½•Â Â Â Â Â Â Â Â Â <5>Â æ˜¾ç¤ºå­¦ç”Ÿè€ƒå‹¤çš„æ•°æ®åˆ—è¡¨Â Â Â <6>Â å¯¹æŒ‡å®šæ•°æ®è¿›è¡Œæ’åºÂ \n");
+printf("<7>è¿›è¡Œæ•°æ®ç»Ÿè®¡Â Â Â Â Â Â Â Â Â <8>Â Â quit\n\n");
+scanf("%d",Â &a);
+switchÂ (a)Â {
+caseÂ 1:
+ADD();
+break;
+caseÂ 2:
+Find();
+break;
+caseÂ 3:
+Change();
+break;
+caseÂ 4:
+Delete();
+break;
+caseÂ 5:
+Print();
+break;
+caseÂ 6:
+Order();
+break;
+caseÂ 7:
+Statistics();
+break;
+caseÂ 8:
+printf("å·²é€€å‡º\n");
+bÂ =Â 0;
+break;
+}
+system("cls");//æ¸…å±å‡½æ•°ï¼Œç•Œé¢æ›´ç¾è§‚Â 
+}
+//åœ¨æœ€åæŠŠä¿¡æ¯è¾“å…¥åˆ°æ–‡ä»¶ï¼Œä¿ç•™ä»¥å¤‡ä¸‹æ¬¡è¿è¡Œä½¿ç”¨Â Â 
+fprintf(F,"%d\n",num);
+forÂ (iÂ =Â 0;Â i<num;Â i++)Â {
+fprintf(F,Â "%sÂ %sÂ %sÂ %sÂ %s\n",Â Students[i].Student_ID,Â Students[i].Name,Â Students[i].Class_Number,Â Students[i].Attandance_date,Â Students[i].Attandance_Result);
+}
+fclose(F);
+//æ–‡ä»¶æ“ä½œç»“æŸÂ 
+returnÂ 0;
 }
